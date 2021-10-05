@@ -85,7 +85,7 @@ class Snake(Canvas):
 			self.delete('all')
 			self.create_text(300,300,justify=CENTER,
 							text=f'GAME OVER\n\nScore: {self.score} \n\nHigh Score:{self.high_score}\n\nNew Game <B>',
-							fill='white',font=(None,30))
+							fill='white',font=(None,32))
 			self.score = 0 
 
 		elif self.check_collisions() and self.starting == False:
