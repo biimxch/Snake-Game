@@ -15,6 +15,7 @@ class Snake(Canvas):
 		self.snake_positions = [(100,100),(80,100),(60,100)]
 		self.food_positions = self.set_new_food_position() #(200,200)
 		self.score = 0
+		self.high_score = 0
 		self.loop = None
 		self.direction = 'Right'
 
@@ -38,6 +39,7 @@ class Snake(Canvas):
 		# create score text
 		FONT = (None,14)
 		self.create_text(45,12,text='Score: {}'.format(self.score),tag='score',fill='white',font=FONT)
+		self.create_text(520,12,text='High Score: {}'.format(self.high_score),tag='highscore',fill='white',font=FONT)
 
 
 		# create snake body
@@ -77,12 +79,15 @@ class Snake(Canvas):
 	def rungame(self):
 		if self.check_collisions() and self.starting == True:
 			# when collisions
+			
 			self.after_cancel(self.loop)
 			self.starting = False
 			self.delete('all')
 			self.create_text(300,300,justify=CENTER,
-							text=f'GAME OVER\n\nScore: {self.score}\n\nNew Game <B>',
+							text=f'GAME OVER\n\nScore: {self.score} \n\nHigh Score:{self.high_score}\n\nNew Game <B>',
 							fill='white',font=(None,30))
+			self.score = 0 
+
 		elif self.check_collisions() and self.starting == False:
 			# when press R
 			self.delete('all')
@@ -127,6 +132,11 @@ class Snake(Canvas):
 
 			score = self.find_withtag('score')
 			self.itemconfigure(score,text='Score: {}'.format(self.score),tag='score')
+
+			if self.score > self.high_score :
+				self.high_score = self.score
+			high_score = self.find_withtag('highscore')
+			self.itemconfigure(high_score,text='High Score: {}'.format(self.high_score),tag='highscore')
 
 			self.food_positions = self.set_new_food_position()
 			self.coords(self.find_withtag('food'),self.food_positions)
